@@ -13,52 +13,91 @@
   *{box-sizing:border-box}
   html,body{margin:0;background:var(--bg);color:var(--white);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
   a{color:inherit}
-  header{display:flex;align-items:center;justify-content:space-between;height:60px;padding:0 22px;border-bottom:1px solid var(--line);position:sticky;top:0;background:rgba(10,13,26,.85);backdrop-filter:blur(10px);z-index:20}
+  header{display:flex;align-items:center;justify-content:space-between;height:60px;padding:0 22px;border-bottom:1px solid var(--line);position:sticky;top:0;background:rgba(10,13,26,.9);backdrop-filter:blur(10px);z-index:40}
   .brand{display:flex;align-items:center;gap:9px;font-weight:800;font-size:16px}
   .brand .m{width:30px;height:30px;border-radius:8px;background:var(--grad);display:flex;align-items:center;justify-content:center;color:#06122a;font-weight:900}
   .brand .g{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
-  .layout{display:grid;grid-template-columns:400px 1fr;gap:0;min-height:calc(100vh - 60px)}
+  .planpill{display:flex;align-items:center;gap:10px}
+  .planpill .lab{font-size:12.5px;color:var(--sub)}
+  .planpill .lab b{color:#fff}
+  .up{background:var(--grad);color:#06122a;border:0;font-weight:800;font-size:13px;padding:8px 14px;border-radius:9px;cursor:pointer}
+  .layout{display:grid;grid-template-columns:410px 1fr;min-height:calc(100vh - 60px)}
   @media(max-width:900px){.layout{grid-template-columns:1fr}}
-  .panel{padding:22px;border-right:1px solid var(--line);overflow-y:auto}
-  .sec{font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#8b93d8;margin:18px 0 10px}
+  .panel{padding:20px;border-right:1px solid var(--line);overflow-y:auto}
+  .sec{font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#8b93d8;margin:18px 0 10px;display:flex;align-items:center;gap:8px}
   .sec:first-child{margin-top:0}
+  .pro-badge{font-size:9px;font-weight:800;letter-spacing:.06em;color:#06122a;background:var(--a2);padding:2px 7px;border-radius:999px}
   label{display:block;font-size:12.5px;color:#c3c9e6;margin:10px 0 5px;font-weight:600}
-  input[type=text],input[type=email],textarea,select{width:100%;background:#0c1024;border:1px solid var(--line);border-radius:10px;padding:10px 12px;color:#fff;font-size:14px;outline:none}
-  input:focus,textarea:focus,select:focus{border-color:var(--a1)}
+  input[type=text],input[type=email],select{width:100%;background:#0c1024;border:1px solid var(--line);border-radius:10px;padding:10px 12px;color:#fff;font-size:14px;outline:none}
+  input:focus,select:focus{border-color:var(--a1)}
   select option{background:#0c1024}
   .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
   .templates{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
-  .tpl{cursor:pointer;border:1px solid var(--line);border-radius:10px;padding:10px 6px;text-align:center;font-size:11.5px;font-weight:700;color:#c3c9e6;background:#0c1024;transition:all .15s}
+  .tpl{cursor:pointer;border:1px solid var(--line);border-radius:10px;padding:10px 6px;text-align:center;font-size:11.5px;font-weight:700;color:#c3c9e6;background:#0c1024}
   .tpl:hover{border-color:var(--a1)}
-  .tpl.on{border-color:transparent;background:linear-gradient(#0c1024,#0c1024) padding-box,var(--grad) border-box;border:2px solid transparent;color:#fff}
-  .tpl .dot{width:100%;height:26px;border-radius:6px;margin-bottom:6px}
-  .swatches{display:flex;gap:8px;flex-wrap:wrap}
+  .tpl.on{border:2px solid transparent;background:linear-gradient(#0c1024,#0c1024) padding-box,var(--grad) border-box;color:#fff}
+  .tpl .dot{width:100%;height:24px;border-radius:6px;margin-bottom:6px}
+  .swatches{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
   .sw{width:30px;height:30px;border-radius:8px;cursor:pointer;border:2px solid transparent}
   .sw.on{border-color:#fff}
-  .photobtn{display:flex;gap:10px;align-items:center}
-  .photobtn button{background:#0c1024;border:1px solid var(--line);color:#fff;border-radius:9px;padding:9px 12px;cursor:pointer;font-size:13px}
-  .photobtn button:hover{border-color:var(--a1)}
+  .btnrow{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+  .mini{background:#0c1024;border:1px solid var(--line);color:#fff;border-radius:9px;padding:9px 12px;cursor:pointer;font-size:13px}
+  .mini:hover{border-color:var(--a1)}
+  .lockrow{position:relative}
+  .lock{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--sub)}
+  .toggle{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.05)}
+  .toggle .t-l{display:flex;align-items:center;gap:9px;font-size:13px;color:#c3c9e6}
+  .toggle input[type=text]{margin-top:6px}
+  .sw-toggle{position:relative;width:38px;height:22px;flex:0 0 auto}
+  .sw-toggle input{opacity:0;width:100%;height:100%;position:absolute;margin:0;cursor:pointer;z-index:2}
+  .sw-toggle .tk{position:absolute;inset:0;background:#2a3050;border-radius:999px;transition:.2s}
+  .sw-toggle .tk::after{content:"";position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;background:#fff;transition:.2s}
+  .sw-toggle input:checked + .tk{background:linear-gradient(135deg,var(--a1),var(--a2))}
+  .sw-toggle input:checked + .tk::after{transform:translateX(16px)}
   .hint{font-size:11.5px;color:var(--sub);margin-top:6px}
-  .stage{padding:30px;display:flex;flex-direction:column;gap:18px;align-items:center;justify-content:flex-start}
-  .mock{width:100%;max-width:640px;background:#fff;border-radius:14px;padding:26px;color:#222;box-shadow:0 24px 60px rgba(0,0,0,.4)}
+  .stage{padding:30px;display:flex;flex-direction:column;gap:18px;align-items:center}
+  .mock{width:100%;max-width:660px;background:#fff;border-radius:14px;padding:26px;color:#222;box-shadow:0 24px 60px rgba(0,0,0,.4)}
   .mock .mailhdr{font-size:12px;color:#9aa0b4;border-bottom:1px solid #eef0f5;padding-bottom:12px;margin-bottom:16px}
   .mock .body{font-size:14px;color:#3a3f4b;line-height:1.6;margin-bottom:22px}
-  #preview{margin-top:6px}
-  .exports{display:flex;gap:10px;flex-wrap:wrap;max-width:640px;width:100%}
-  .btn{flex:1;min-width:160px;justify-content:center;display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:14px;padding:13px 18px;border-radius:11px;cursor:pointer;border:0}
+  .exports{display:flex;gap:10px;flex-wrap:wrap;max-width:660px;width:100%}
+  .btn{flex:1;min-width:150px;justify-content:center;display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:14px;padding:13px 18px;border-radius:11px;cursor:pointer;border:0}
   .btn-primary{background:var(--grad);color:#06122a}
   .btn-ghost{background:rgba(255,255,255,.06);color:#fff;border:1px solid var(--line)}
-  .btn:hover{filter:brightness(1.05)}
-  .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(30px);background:var(--grad);color:#06122a;font-weight:700;padding:12px 22px;border-radius:12px;opacity:0;transition:all .3s;pointer-events:none}
+  .note{max-width:660px;width:100%;font-size:12.5px;color:var(--sub);background:rgba(99,102,241,.08);border:1px solid rgba(99,102,241,.2);border-radius:10px;padding:12px 14px}
+  .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(30px);background:var(--grad);color:#06122a;font-weight:700;padding:12px 22px;border-radius:12px;opacity:0;transition:.3s;pointer-events:none;z-index:60}
   .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-  .note{max-width:640px;width:100%;font-size:12.5px;color:var(--sub);background:rgba(99,102,241,.08);border:1px solid rgba(99,102,241,.2);border-radius:10px;padding:12px 14px}
-  #animrow{display:none}
+  #animrow,#dirrow{display:none}
+  /* modal */
+  .modal{position:fixed;inset:0;background:rgba(6,9,20,.72);display:none;align-items:center;justify-content:center;z-index:50;padding:20px}
+  .modal.show{display:flex}
+  .mcard{background:var(--bg2);border:1px solid var(--line);border-radius:18px;max-width:760px;width:100%;padding:26px;position:relative}
+  .mcard h2{margin:0 0 4px;font-size:22px}
+  .mcard p.sub{margin:0 0 20px;color:var(--sub);font-size:14px}
+  .mx{position:absolute;top:16px;right:18px;background:none;border:0;color:var(--sub);font-size:22px;cursor:pointer}
+  .plans{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:620px){.plans{grid-template-columns:1fr}}
+  .plan{border:1px solid var(--line);border-radius:14px;padding:20px;display:flex;flex-direction:column}
+  .plan.pro{border:2px solid transparent;background:linear-gradient(var(--bg2),var(--bg2)) padding-box,var(--grad) border-box}
+  .plan h3{margin:0;font-size:15px;color:#c7d2fe}
+  .plan .amt{font-size:32px;font-weight:850;margin:6px 0 2px}
+  .plan .amt small{font-size:13px;color:var(--sub);font-weight:600}
+  .plan ul{list-style:none;padding:0;margin:12px 0 18px;font-size:13px;color:#aab2d8;display:flex;flex-direction:column;gap:7px}
+  .plan li{display:flex;gap:8px;align-items:flex-start}
+  .plan li svg{width:15px;height:15px;color:#22d3ee;flex:0 0 auto;margin-top:2px}
+  .plan .btn{margin-top:auto}
+  .codebox{margin-top:18px;border-top:1px solid var(--line);padding-top:16px;display:flex;gap:10px;align-items:flex-end}
+  .codebox > div{flex:1}
+  .codebox button{background:#0c1024;border:1px solid var(--line);color:#fff;border-radius:10px;padding:10px 16px;cursor:pointer;font-weight:700}
 </style>
 </head>
 <body>
 <header>
   <div class="brand"><span class="m">M</span> Mail Identity <span class="g">AI</span> · Studio</div>
-  <a class="brand" href="index.html" style="font-size:13px;color:#8b93b8;font-weight:600">← Back to site</a>
+  <div class="planpill">
+    <span class="lab" id="planLabel">Plan: <b>Free</b></span>
+    <button class="up" id="openUpgrade">Upgrade</button>
+    <a class="brand" href="index.html" style="font-size:13px;color:#8b93b8;font-weight:600">← Site</a>
+  </div>
 </header>
 
 <div class="layout">
@@ -73,17 +112,33 @@
     <div id="animrow">
       <label>Photo animation</label>
       <select id="photoanim">
-        <option value="shine">Shine — settles as a picture (recommended)</option>
+        <option value="shine">Shine — settles as a picture</option>
         <option value="wipe">Slat wipe — bars open to reveal</option>
         <option value="cascade">Cascade — bars reveal one by one</option>
         <option value="reveal-hold">Reveal once &amp; hold</option>
         <option value="still">Still picture — no motion</option>
       </select>
-      <div class="hint">"Shine" and "Reveal once" leave a clean photo — best for a polished look.</div>
+    </div>
+    <div id="dirrow">
+      <label>Reveal direction — how the lines clear the picture</label>
+      <select id="revealdir">
+        <option value="up">Upward ↑</option>
+        <option value="down">Downward ↓</option>
+        <option value="left">Left ←</option>
+        <option value="right">Right →</option>
+      </select>
     </div>
 
     <div class="sec">Accent</div>
     <div class="swatches" id="sw"></div>
+    <div class="lockrow" style="margin-top:10px">
+      <label>Custom brand accent <span class="pro-badge">PRO</span></label>
+      <div class="btnrow">
+        <input type="color" id="acc1" value="#6366f1" style="width:44px;height:36px;padding:2px;background:#0c1024;border:1px solid var(--line);border-radius:8px">
+        <input type="color" id="acc2" value="#22d3ee" style="width:44px;height:36px;padding:2px;background:#0c1024;border:1px solid var(--line);border-radius:8px">
+        <span class="hint" style="margin:0">Match your two brand colors</span>
+      </div>
+    </div>
 
     <div class="sec">Your details</div>
     <label>Full name</label><input id="name" type="text" value="Edward Sanchez">
@@ -96,22 +151,26 @@
     <label>Website</label><input id="website" type="text" value="www.mailidentityai.com">
     <label style="margin-top:10px"><input type="checkbox" id="verified" checked> Show verified badge</label>
 
-    <div class="sec">Photo / logo</div>
-    <div class="photobtn">
-      <button id="pickphoto">Upload photo</button>
-      <button id="clearphoto">Use initials</button>
-    </div>
+    <div class="sec">Images</div>
+    <label>Profile photo</label>
+    <div class="btnrow"><button class="mini" id="pickphoto">Upload photo</button><button class="mini" id="clearphoto">Remove</button></div>
     <input type="file" id="photofile" accept="image/*" style="display:none">
-    <div class="hint">Square photos look best. No photo? We'll use your initials.</div>
+    <label style="margin-top:12px">Company logo <span class="pro-badge">PRO</span></label>
+    <div class="btnrow"><button class="mini" id="picklogo">Upload logo</button><button class="mini" id="clearlogo">Remove</button></div>
+    <input type="file" id="logofile" accept="image/*" style="display:none">
+    <label style="margin-top:12px">Which image fills the big slot?</label>
+    <select id="bigslot">
+      <option value="photo">Profile photo (big) · logo small</option>
+      <option value="logo">Company logo (big) · photo small</option>
+    </select>
 
-    <div class="sec">Social links</div>
-    <div class="row2">
-      <div><label>LinkedIn</label><input id="s_linkedin" type="text" placeholder="linkedin.com/in/..."></div>
-      <div><label>Instagram</label><input id="s_instagram" type="text" placeholder="instagram.com/..."></div>
-    </div>
-    <div class="row2">
-      <div><label>X / Twitter</label><input id="s_x" type="text" placeholder="x.com/..."></div>
-      <div><label>YouTube</label><input id="s_youtube" type="text" placeholder="youtube.com/..."></div>
+    <div class="sec">Socials — turn on/off &amp; add links</div>
+    <div id="socialList"></div>
+
+    <div class="sec">Branding</div>
+    <div class="toggle">
+      <span class="t-l"><span>Remove "Made with Mail Identity AI"</span> <span class="pro-badge">PRO</span></span>
+      <span class="sw-toggle"><input type="checkbox" id="removeBrand"><span class="tk"></span></span>
     </div>
   </div>
 
@@ -125,20 +184,62 @@
       <button class="btn btn-primary" id="copyBtn">Copy signature HTML</button>
       <button class="btn btn-ghost" id="dlBtn">Download .html</button>
     </div>
-    <div class="note">MVP note: this exports ready-to-paste HTML with the animation. In Phase 2 the same design renders to an email-safe animated <b>GIF</b> on our servers so the motion survives in Gmail &amp; Outlook — that's the "Own It" deliverable.</div>
+    <div class="note" id="exportNote"></div>
   </div>
 </div>
+
+<!-- Upgrade modal -->
+<div class="modal" id="modal">
+  <div class="mcard">
+    <button class="mx" id="closeModal">×</button>
+    <h2>Unlock the full signature</h2>
+    <p class="sub">Start free, cancel anytime. Pro unlocks your own logo, brand colors, and removes our badge.</p>
+    <div class="plans">
+      <div class="plan">
+        <h3>Free</h3>
+        <div class="amt">$0</div>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg>All templates &amp; animations</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg>Profile photo &amp; socials</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg>Export with a small badge</li>
+        </ul>
+        <button class="btn btn-ghost" id="stayFree">Stay on Free</button>
+      </div>
+      <div class="plan pro">
+        <h3>Pro</h3>
+        <div class="amt">$8 <small>/mo · 7-day free trial</small></div>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg>Your own logo in the signature</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg>Custom brand accent colors</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg>Remove the "Made with" badge</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg>Big-slot logo placement</li>
+        </ul>
+        <button class="btn btn-primary" id="startTrial">Start 7-day free trial</button>
+      </div>
+    </div>
+    <div class="codebox">
+      <div>
+        <label style="margin:0 0 5px">Have an access code?</label>
+        <input type="text" id="codeInput" placeholder="Enter code">
+      </div>
+      <button id="applyCode">Apply</button>
+    </div>
+    <p class="hint" id="trialNote" style="margin-top:12px">MVP: billing isn't connected yet — the trial and code just unlock features so you can build and export.</p>
+  </div>
+</div>
+
 <div class="toast" id="toast">Copied!</div>
 
 <script>
-const ACCENTS=[
-  ["#6366f1","#22d3ee"],["#7c3aed","#ec4899"],["#0ea5e9","#14b8a6"],
-  ["#f59e0b","#ef4444"],["#10b981","#84cc16"],["#111827","#6b7280"]
-];
-const state={template:"reveal",accent:0,photo:null,photoAnim:"shine"};
+const ACCENTS=[["#6366f1","#22d3ee"],["#7c3aed","#ec4899"],["#0ea5e9","#14b8a6"],["#f59e0b","#ef4444"],["#10b981","#84cc16"],["#111827","#6b7280"]];
+const SOC=[["web","Website"],["linkedin","LinkedIn"],["instagram","Instagram"],["x","X / Twitter"],["youtube","YouTube"]];
+const CODES=["MIA-FRIENDS-2026","FRIENDSOFMIA","MIAVIP"];
+const state={template:"reveal",accent:0,customAccent:null,photo:null,logo:null,bigSlot:"photo",photoAnim:"shine",revealDir:"up",
+  socials:{web:{on:true,url:""},linkedin:{on:true,url:""},instagram:{on:true,url:""},x:{on:true,url:""},youtube:{on:false,url:""}},
+  tier:"free",removeBrand:false};
 const $=id=>document.getElementById(id);
+const isPro=()=>state.tier==="pro";
 const fields=["name","title","company","tagline","email","website"];
-const socials=["linkedin","instagram","x","youtube"];
 
 const IC={
   web:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/></svg>',
@@ -148,56 +249,66 @@ const IC={
   youtube:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 12s0-3.2-.4-4.7a2.5 2.5 0 0 0-1.76-1.77C19.3 5.1 12 5.1 12 5.1s-7.3 0-8.84.42A2.5 2.5 0 0 0 1.4 7.3C1 8.8 1 12 1 12s0 3.2.4 4.7a2.5 2.5 0 0 0 1.76 1.77C4.7 18.9 12 18.9 12 18.9s7.3 0 8.84-.42a2.5 2.5 0 0 0 1.76-1.77C23 15.2 23 12 23 12zM9.75 15.02V8.98L15.5 12z"/></svg>'
 };
 function badge(a1,a2,id){return `<svg width="17" height="17" viewBox="0 0 24 24" fill="none" style="flex:0 0 auto"><path d="M12 1.5l2.35 1.7 2.9-.06 1.02 2.72 2.38 1.66-.9 2.76.9 2.76-2.38 1.66-1.02 2.72-2.9-.06L12 22.5l-2.35-1.7-2.9.06-1.02-2.72L3.35 16.5l.9-2.76-.9-2.76 2.38-1.66 1.02-2.72 2.9.06L12 1.5z" fill="url(#${id})"/><path d="M8.5 12.3l2.2 2.2 4.6-4.6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><defs><linearGradient id="${id}" x1="0" y1="0" x2="24" y2="24"><stop stop-color="${a1}"/><stop offset="1" stop-color="${a2}"/></linearGradient></defs></svg>`;}
-function val(id){return $(id).value.trim();}
-function initials(n){return (n.split(/\s+/).map(w=>w[0]).slice(0,2).join("")||"M").toUpperCase();}
-function activeSocials(){return socials.filter(s=>val("s_"+s)).map(s=>({k:s,href:val("s_"+s)}));}
+const val=id=>$(id).value.trim();
+const initials=n=>(n.split(/\s+/).map(w=>w[0]).slice(0,2).join("")||"M").toUpperCase();
+function accent(){return state.customAccent||ACCENTS[state.accent];}
 function railLinks(color){
-  let s=activeSocials();
-  if(!s.length) s=[{k:'linkedin',href:'#'},{k:'instagram',href:'#'},{k:'x',href:'#'}];
-  return s.map(o=>`<a href="${o.href}" style="color:${color};display:flex;text-decoration:none">${IC[o.k]||IC.web}</a>`).join("");
+  let list=SOC.filter(([k])=>state.socials[k].on).map(([k])=>({k,href:state.socials[k].url||"#"}));
+  if(!list.length) return "";
+  return list.map(o=>`<a href="${o.href}" style="color:${color};display:flex;text-decoration:none">${IC[o.k]}</a>`).join("");
 }
+function panelImages(){
+  const p=state.photo, l=state.logo;
+  const big = state.bigSlot==="logo" ? (l||p) : (p||l);
+  const small = state.bigSlot==="logo" ? (p) : (l);
+  const bigIsLogo = state.bigSlot==="logo" ? !!l : (!p && !!l);
+  return {big,small,bigIsLogo};
+}
+function imgTag(src,contain){return `<img src="${src}" alt="" style="width:100%;height:100%;object-fit:${contain?'contain':'cover'};object-position:60% 30%;position:absolute;inset:0;${contain?'background:#fff;padding:10px;':''}">`;}
 
-/* Polished photo panel with selectable animation style */
-function photoPanel(style, photoHTML){
+function photoPanel(style,dir,big,bigIsLogo,a1,a2,initialsTxt){
   const clip="clip-path:polygon(16% 0,100% 0,100% 100%,0 100%);-webkit-clip-path:polygon(16% 0,100% 0,100% 100%,0 100%)";
+  const inner = big ? imgTag(big,bigIsLogo) : `<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,${a1},${a2});color:#fff;font-weight:800;font-size:30px">${initialsTxt}</div>`;
+  const OFF={up:"translateY(-130%)",down:"translateY(130%)",left:"translateX(-130%)",right:"translateX(130%)"}[dir]||"translateY(-130%)";
   let overlay="",css="";
   if(style==="wipe"||style==="cascade"){
     overlay=`<div class="mia-shut" style="position:absolute;inset:-16% -26%;transform:skewX(-11deg);display:flex;gap:3px;pointer-events:none"><b></b><b></b><b></b><b></b></div>`;
     const dur=style==="cascade"?"7s":"6s";
     const del=style==="cascade"?["0s",".4s",".8s","1.2s"]:[".05s",".2s",".35s",".5s"];
-    css=`.mia-sig .mia-shut b{flex:1;background:#fff;transform:skewX(0) translateY(0);animation:miaRv ${dur} cubic-bezier(.66,0,.2,1) infinite}`+
+    css=`.mia-sig .mia-shut b{flex:1;background:#fff;animation:miaRv ${dur} cubic-bezier(.66,0,.2,1) infinite}`+
         del.map((d,i)=>`.mia-sig .mia-shut b:nth-child(${i+1}){animation-delay:${d}}`).join("")+
-        `@keyframes miaRv{0%{transform:translateY(0)}15%{transform:translateY(-125%)}90%{transform:translateY(-125%)}100%{transform:translateY(0)}}`;
+        `@keyframes miaRv{0%{transform:none}15%{transform:${OFF}}90%{transform:${OFF}}100%{transform:none}}`;
   }else if(style==="reveal-hold"){
     overlay=`<div class="mia-shut" style="position:absolute;inset:-16% -26%;transform:skewX(-11deg);display:flex;gap:3px;pointer-events:none"><b></b><b></b><b></b><b></b></div>`;
     css=`.mia-sig .mia-shut b{flex:1;background:#fff;animation:miaOnce 1.5s cubic-bezier(.66,0,.2,1) forwards}`+
         [".1s",".28s",".46s",".64s"].map((d,i)=>`.mia-sig .mia-shut b:nth-child(${i+1}){animation-delay:${d}}`).join("")+
-        `@keyframes miaOnce{to{transform:translateY(-125%)}}`;
+        `@keyframes miaOnce{to{transform:${OFF}}}`;
   }else if(style==="shine"){
     overlay=`<div class="mia-shine" style="position:absolute;top:-30%;bottom:-30%;left:-30%;width:34px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.5),transparent);transform:skewX(-11deg);pointer-events:none"></div>`;
     css=`.mia-sig .mia-shine{animation:miaSh 5s ease-in-out infinite}@keyframes miaSh{0%{left:-30%}55%{left:125%}100%{left:125%}}`;
   }
-  return {panel:`<div style="position:relative;width:150px;overflow:hidden;${clip};background:#0d1220">${photoHTML}${overlay}</div>`, css:css};
+  return {panel:`<div style="position:relative;width:150px;overflow:hidden;${clip};background:#0d1220">${inner}${overlay}</div>`,css};
 }
 
 function render(){
-  const [a1,a2]=ACCENTS[state.accent];
+  const [a1,a2]=accent();
   $("animrow").style.display = state.template==="reveal" ? "block":"none";
+  $("dirrow").style.display = (state.template==="reveal" && ["wipe","cascade","reveal-hold"].includes(state.photoAnim)) ? "block":"none";
   const d={name:val("name"),title:val("title"),company:val("company"),tagline:val("tagline"),email:val("email"),website:val("website")};
   const verified=$("verified").checked;
-  const photoHTML=state.photo
-    ? `<img src="${state.photo}" alt="${d.name}" style="width:100%;height:100%;object-fit:cover;object-position:60% 28%;position:absolute;inset:0">`
-    : `<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,${a1},${a2});color:#fff;font-weight:800;font-size:30px">${initials(d.name)}</div>`;
+  const {big,small,bigIsLogo}=panelImages();
+  const markInner = small
+    ? `<img src="${small}" style="width:100%;height:100%;object-fit:${state.bigSlot==='logo'?'cover':'contain'};border-radius:8px" alt="">`
+    : initials(d.company);
   const uid=Math.random().toString(36).slice(2,7);
-  let html="",css="";
+  let sig="",css="";
 
   if(state.template==="reveal"){
-    const pp=photoPanel(state.photoAnim,photoHTML);
-    css=pp.css;
-    html=`<div class="mia-sig" style="display:inline-flex;align-items:stretch;background:#fff;border-radius:14px;box-shadow:0 8px 26px rgba(20,26,50,.10);overflow:hidden;font-family:Arial,Helvetica,sans-serif">
+    const pp=photoPanel(state.photoAnim,state.revealDir,big,bigIsLogo,a1,a2,initials(d.name)); css=pp.css;
+    sig=`<div class="mia-sig" style="display:inline-flex;align-items:stretch;background:#fff;border-radius:14px;box-shadow:0 8px 26px rgba(20,26,50,.10);overflow:hidden;font-family:Arial,Helvetica,sans-serif">
       <div style="width:50px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:15px;margin:12px 0 12px 10px;background:#f3f5f9;border-radius:11px">${railLinks("#20242e")}</div>
       <div style="padding:16px 14px 16px 16px;display:flex;flex-direction:column;justify-content:center">
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:9px"><span style="width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,${a1},${a2});display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:15px">${initials(d.company)}</span><span style="line-height:1.1"><b style="font-size:12px;letter-spacing:.1em;color:#141824">${d.company.toUpperCase()}</b><span style="display:block;font-size:8px;letter-spacing:.28em;color:#6b7180">${d.tagline.toUpperCase()}</span></span></div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:9px"><span style="width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,${a1},${a2});display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:15px;overflow:hidden">${markInner}</span><span style="line-height:1.1"><b style="font-size:12px;letter-spacing:.1em;color:#141824">${d.company.toUpperCase()}</b><span style="display:block;font-size:8px;letter-spacing:.28em;color:#6b7180">${d.tagline.toUpperCase()}</span></span></div>
         <div style="display:flex;align-items:center;gap:6px"><span style="font-size:19px;font-weight:800;color:#141824;letter-spacing:-.3px">${d.name}</span>${verified?badge(a1,a2,'b'+uid):''}</div>
         <div style="font-size:12px;color:#6b7180;font-weight:600;margin-top:2px">${d.title}</div>
         <div style="height:1px;background:linear-gradient(90deg,${a1}88,transparent);margin:9px 0 7px;width:80%"></div>
@@ -206,13 +317,13 @@ function render(){
       </div>
       ${pp.panel}
     </div>`;
-  }
-  else if(state.template==="spotlight"){
+  } else if(state.template==="spotlight"){
     css=`.mia-sig .ring{animation:sp 4s linear infinite}@keyframes sp{to{transform:rotate(360deg)}}.mia-sig .bar{animation:gw 2.6s ease-in-out infinite}@keyframes gw{0%,100%{width:44px}50%{width:74px}}`;
-    html=`<div class="mia-sig" style="display:inline-flex;align-items:center;gap:18px;background:#fff;border-radius:14px;box-shadow:0 8px 26px rgba(20,26,50,.10);padding:18px 24px 18px 18px;font-family:Arial,Helvetica,sans-serif">
+    const round = big?imgTag(big,bigIsLogo):`<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,${a1},${a2});color:#fff;font-weight:800;font-size:26px">${initials(d.name)}</div>`;
+    sig=`<div class="mia-sig" style="display:inline-flex;align-items:center;gap:18px;background:#fff;border-radius:14px;box-shadow:0 8px 26px rgba(20,26,50,.10);padding:18px 24px 18px 18px;font-family:Arial,Helvetica,sans-serif">
       <div style="position:relative;width:84px;height:84px;flex:0 0 auto">
         <div class="ring" style="position:absolute;inset:-4px;border-radius:50%;background:conic-gradient(from 0deg,${a1},${a2},${a1})"></div>
-        <div style="position:absolute;inset:0;border-radius:50%;overflow:hidden;border:3px solid #fff">${photoHTML}</div>
+        <div style="position:absolute;inset:0;border-radius:50%;overflow:hidden;border:3px solid #fff">${round}</div>
       </div>
       <div>
         <div style="display:flex;align-items:center;gap:6px"><span style="font-size:21px;font-weight:800;color:#141824;letter-spacing:-.3px">${d.name}</span>${verified?badge(a1,a2,'b'+uid):''}</div>
@@ -222,11 +333,10 @@ function render(){
         <div style="display:flex;gap:10px;margin-top:9px">${railLinks(a1)}</div>
       </div>
     </div>`;
-  }
-  else{
+  } else {
     css=`.mia-sig .sweep{animation:swp 3s ease-in-out infinite}@keyframes swp{0%{background-position:0 0}100%{background-position:200% 0}}`;
-    html=`<div class="mia-sig" style="display:inline-block;background:#fff;border-radius:12px;box-shadow:0 8px 26px rgba(20,26,50,.10);padding:20px 24px;font-family:Arial,Helvetica,sans-serif;min-width:340px">
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px"><span style="width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,${a1},${a2});display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:16px">${initials(d.company)}</span><b style="font-size:13px;letter-spacing:.1em;color:#141824">${d.company.toUpperCase()}</b></div>
+    sig=`<div class="mia-sig" style="display:inline-block;background:#fff;border-radius:12px;box-shadow:0 8px 26px rgba(20,26,50,.10);padding:20px 24px;font-family:Arial,Helvetica,sans-serif;min-width:340px">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px"><span style="width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,${a1},${a2});display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:16px;overflow:hidden">${markInner}</span><b style="font-size:13px;letter-spacing:.1em;color:#141824">${d.company.toUpperCase()}</b></div>
       <div class="sweep" style="height:3px;border-radius:2px;background:linear-gradient(90deg,${a1},${a2},${a1});background-size:200% 100%;margin-bottom:12px"></div>
       <div style="display:flex;align-items:center;gap:6px"><span style="font-size:20px;font-weight:800;color:#141824;letter-spacing:-.3px">${d.name}</span>${verified?badge(a1,a2,'b'+uid):''}</div>
       <div style="font-size:12.5px;color:#6b7180;font-weight:600;margin:2px 0 10px">${d.title}</div>
@@ -234,36 +344,64 @@ function render(){
       <div style="display:flex;gap:10px;margin-top:11px">${railLinks(a1)}</div>
     </div>`;
   }
-  $("preview").innerHTML=`<style>${css}</style>`+html;
-  window._export=`<style>${css}</style>`+html;
+
+  const showBrand = !(isPro() && state.removeBrand);
+  const wm = showBrand ? `<div style="font-family:Arial,Helvetica,sans-serif;font-size:10px;color:#aab1c6;margin-top:8px">✦ Made with <a href="https://www.mailidentityai.com" style="color:#6366f1;text-decoration:none">Mail Identity AI</a></div>` : "";
+  const out=`<style>${css}</style>`+sig+wm;
+  $("preview").innerHTML=out;
+  window._export=out;
+  $("exportNote").innerHTML = showBrand
+    ? `Free export includes a small “Made with” badge. <b>Upgrade to Pro</b> (or use a friend code) to remove it, add your logo, and use your brand colors. Phase 2 turns this into an email-safe animated GIF.`
+    : `Pro export — badge removed, your branding applied. Phase 2 renders this to an email-safe animated GIF that plays in Gmail &amp; Outlook.`;
 }
 
-function buildSwatches(){
-  const w=$("sw");
-  ACCENTS.forEach((a,i)=>{
-    const d=document.createElement("div");
-    d.className="sw"+(i===0?" on":"");
-    d.style.background=`linear-gradient(135deg,${a[0]},${a[1]})`;
-    d.onclick=()=>{state.accent=i;[...w.children].forEach(c=>c.classList.remove("on"));d.classList.add("on");render();};
-    w.appendChild(d);
+/* ---- gating ---- */
+function requirePro(){ if(isPro()) return true; openModal(); return false; }
+function openModal(){$("modal").classList.add("show");}
+function closeModal(){$("modal").classList.remove("show");}
+function setTier(t,label){state.tier=t;$("planLabel").innerHTML=`Plan: <b>${label}</b>`;render();}
+
+/* ---- build controls ---- */
+function buildSwatches(){const w=$("sw");ACCENTS.forEach((a,i)=>{const d=document.createElement("div");d.className="sw"+(i===0?" on":"");d.style.background=`linear-gradient(135deg,${a[0]},${a[1]})`;d.onclick=()=>{state.accent=i;state.customAccent=null;[...w.children].forEach(c=>c.classList.remove("on"));d.classList.add("on");render();};w.appendChild(d);});}
+function buildSocials(){
+  const wrap=$("socialList");
+  SOC.forEach(([k,label])=>{
+    const row=document.createElement("div");row.className="toggle";row.style.flexDirection="column";row.style.alignItems="stretch";
+    row.innerHTML=`<div style="display:flex;align-items:center;justify-content:space-between"><span class="t-l">${label}</span>
+      <span class="sw-toggle"><input type="checkbox" data-k="${k}" ${state.socials[k].on?'checked':''}><span class="tk"></span></span></div>
+      <input type="text" data-url="${k}" placeholder="link (optional)" style="display:${state.socials[k].on?'block':'none'}">`;
+    wrap.appendChild(row);
+    row.querySelector('input[type=checkbox]').addEventListener('change',e=>{state.socials[k].on=e.target.checked;row.querySelector('input[type=text]').style.display=e.target.checked?'block':'none';render();});
+    row.querySelector('input[type=text]').addEventListener('input',e=>{state.socials[k].url=e.target.value.trim();render();});
   });
 }
 function toast(m){const t=$("toast");t.textContent=m;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),1600);}
 
-document.querySelectorAll(".tpl").forEach(el=>el.onclick=()=>{
-  document.querySelectorAll(".tpl").forEach(x=>x.classList.remove("on"));
-  el.classList.add("on");state.template=el.dataset.t;render();
-});
+/* ---- events ---- */
+document.querySelectorAll(".tpl").forEach(el=>el.onclick=()=>{document.querySelectorAll(".tpl").forEach(x=>x.classList.remove("on"));el.classList.add("on");state.template=el.dataset.t;render();});
 $("photoanim").addEventListener("change",e=>{state.photoAnim=e.target.value;render();});
-fields.concat(socials.map(s=>"s_"+s)).forEach(id=>$(id).addEventListener("input",render));
+$("revealdir").addEventListener("change",e=>{state.revealDir=e.target.value;render();});
+fields.forEach(id=>$(id).addEventListener("input",render));
 $("verified").addEventListener("change",render);
+$("bigslot").addEventListener("change",e=>{if(e.target.value==="logo"&&!requirePro()){e.target.value="photo";return;}state.bigSlot=e.target.value;render();});
 $("pickphoto").onclick=()=>$("photofile").click();
 $("clearphoto").onclick=()=>{state.photo=null;render();};
 $("photofile").onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>{state.photo=ev.target.result;render();};r.readAsDataURL(f);};
-$("copyBtn").onclick=async()=>{try{await navigator.clipboard.writeText(window._export);toast("Signature HTML copied!");}catch(e){toast("Press Ctrl/Cmd+C to copy");}};
-$("dlBtn").onclick=()=>{const blob=new Blob([`<!doctype html><meta charset=utf-8>`+window._export],{type:"text/html"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="my-signature.html";a.click();toast("Downloaded!");};
+$("picklogo").onclick=()=>{if(requirePro())$("logofile").click();};
+$("clearlogo").onclick=()=>{state.logo=null;render();};
+$("logofile").onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>{state.logo=ev.target.result;render();};r.readAsDataURL(f);};
+function applyCustomAccent(){if(!requirePro()){return;}state.customAccent=[$("acc1").value,$("acc2").value];[...$("sw").children].forEach(c=>c.classList.remove("on"));render();}
+$("acc1").addEventListener("input",applyCustomAccent);
+$("acc2").addEventListener("input",applyCustomAccent);
+$("removeBrand").addEventListener("change",e=>{if(!isPro()){e.target.checked=false;openModal();return;}state.removeBrand=e.target.checked;render();});
+$("copyBtn").onclick=async()=>{try{await navigator.clipboard.writeText(window._export);toast("Signature HTML copied!");}catch(e){toast("Press Ctrl/Cmd+C");}};
+$("dlBtn").onclick=()=>{const b=new Blob([`<!doctype html><meta charset=utf-8>`+window._export],{type:"text/html"});const a=document.createElement("a");a.href=URL.createObjectURL(b);a.download="my-signature.html";a.click();toast("Downloaded!");};
+$("openUpgrade").onclick=openModal;$("closeModal").onclick=closeModal;$("stayFree").onclick=closeModal;
+$("modal").addEventListener("click",e=>{if(e.target===$("modal"))closeModal();});
+$("startTrial").onclick=()=>{setTier("pro","Pro · Trial");closeModal();toast("7-day trial started — Pro unlocked");};
+$("applyCode").onclick=()=>{const c=$("codeInput").value.trim().toUpperCase();if(CODES.includes(c)){setTier("pro","Pro · Friend");closeModal();toast("Code applied — full access unlocked");}else{toast("That code isn't valid");}};
 
-buildSwatches();render();
+buildSwatches();buildSocials();render();
 </script>
 </body>
 </html>
