@@ -159,8 +159,8 @@
       <div><label>Company</label><input id="company" type="text" value="Mail Identity AI"></div>
       <div><label>Tagline</label><input id="tagline" type="text" value="Own it, don't rent it"></div>
     </div>
-    <label>Email</label><input id="email" type="email" value="eddie@mailidentityai.com">
-    <label>Website</label><input id="website" type="text" value="www.mailidentityai.com">
+    <label>Email</label><input id="email" type="email" value="eddie@mailidentity.ai">
+    <label>Website</label><input id="website" type="text" value="www.mailidentity.ai">
     <label style="margin-top:10px"><input type="checkbox" id="verified" checked> Show verified badge</label>
 
     <div class="sec">Images</div>
@@ -358,7 +358,7 @@ function render(){
   }
 
   const showBrand = !(isPro() && state.removeBrand);
-  const wm = showBrand ? `<div style="font-family:Arial,Helvetica,sans-serif;font-size:10px;color:#aab1c6;margin-top:8px">✦ Made with <a href="https://www.mailidentityai.com" style="color:#6366f1;text-decoration:none">Mail Identity AI</a></div>` : "";
+  const wm = showBrand ? `<div style="font-family:Arial,Helvetica,sans-serif;font-size:10px;color:#aab1c6;margin-top:8px">✦ Made with <a href="https://www.mailidentity.ai" style="color:#6366f1;text-decoration:none">Mail Identity AI</a></div>` : "";
   const out=`<style>${css}</style>`+sig+wm;
   $("preview").innerHTML=out;
   window._export=out;
