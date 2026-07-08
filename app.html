@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mail Identity AI — Signature Studio</title>
+<link rel="icon" href="favicon.svg">
+<style>
+  :root{
+    --bg:#0a0d1a; --bg2:#0f1330; --panel:#141937; --line:rgba(255,255,255,.10);
+    --white:#f5f7ff; --sub:#8b93b8; --a1:#6366f1; --a2:#22d3ee; --grad:linear-gradient(135deg,#6366f1,#22d3ee);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--bg);color:var(--white);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+  a{color:inherit}
+  header{display:flex;align-items:center;justify-content:space-between;height:60px;padding:0 22px;border-bottom:1px solid var(--line);position:sticky;top:0;background:rgba(10,13,26,.85);backdrop-filter:blur(10px);z-index:20}
+  .brand{display:flex;align-items:center;gap:9px;font-weight:800;font-size:16px}
+  .brand .m{width:30px;height:30px;border-radius:8px;background:var(--grad);display:flex;align-items:center;justify-content:center;color:#06122a;font-weight:900}
+  .brand .g{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .layout{display:grid;grid-template-columns:400px 1fr;gap:0;min-height:calc(100vh - 60px)}
+  @media(max-width:900px){.layout{grid-template-columns:1fr}}
+  .panel{padding:22px;border-right:1px solid var(--line);overflow-y:auto}
+  .sec{font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#8b93d8;margin:18px 0 10px}
+  .sec:first-child{margin-top:0}
+  label{display:block;font-size:12.5px;color:#c3c9e6;margin:10px 0 5px;font-weight:600}
+  input[type=text],input[type=email],textarea,select{width:100%;background:#0c1024;border:1px solid var(--line);border-radius:10px;padding:10px 12px;color:#fff;font-size:14px;outline:none}
+  input:focus,textarea:focus,select:focus{border-color:var(--a1)}
+  select option{background:#0c1024}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .templates{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+  .tpl{cursor:pointer;border:1px solid var(--line);border-radius:10px;padding:10px 6px;text-align:center;font-size:11.5px;font-weight:700;color:#c3c9e6;background:#0c1024;transition:all .15s}
+  .tpl:hover{border-color:var(--a1)}
+  .tpl.on{border-color:transparent;background:linear-gradient(#0c1024,#0c1024) padding-box,var(--grad) border-box;border:2px solid transparent;color:#fff}
+  .tpl .dot{width:100%;height:26px;border-radius:6px;margin-bottom:6px}
+  .swatches{display:flex;gap:8px;flex-wrap:wrap}
+  .sw{width:30px;height:30px;border-radius:8px;cursor:pointer;border:2px solid transparent}
+  .sw.on{border-color:#fff}
+  .photobtn{display:flex;gap:10px;align-items:center}
+  .photobtn button{background:#0c1024;border:1px solid var(--line);color:#fff;border-radius:9px;padding:9px 12px;cursor:pointer;font-size:13px}
+  .photobtn button:hover{border-color:var(--a1)}
+  .hint{font-size:11.5px;color:var(--sub);margin-top:6px}
+  .stage{padding:30px;display:flex;flex-direction:column;gap:18px;align-items:center;justify-content:flex-start}
+  .mock{width:100%;max-width:640px;background:#fff;border-radius:14px;padding:26px;color:#222;box-shadow:0 24px 60px rgba(0,0,0,.4)}
+  .mock .mailhdr{font-size:12px;color:#9aa0b4;border-bottom:1px solid #eef0f5;padding-bottom:12px;margin-bottom:16px}
+  .mock .body{font-size:14px;color:#3a3f4b;line-height:1.6;margin-bottom:22px}
+  #preview{margin-top:6px}
+  .exports{display:flex;gap:10px;flex-wrap:wrap;max-width:640px;width:100%}
+  .btn{flex:1;min-width:160px;justify-content:center;display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:14px;padding:13px 18px;border-radius:11px;cursor:pointer;border:0}
+  .btn-primary{background:var(--grad);color:#06122a}
+  .btn-ghost{background:rgba(255,255,255,.06);color:#fff;border:1px solid var(--line)}
+  .btn:hover{filter:brightness(1.05)}
+  .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(30px);background:var(--grad);color:#06122a;font-weight:700;padding:12px 22px;border-radius:12px;opacity:0;transition:all .3s;pointer-events:none}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  .note{max-width:640px;width:100%;font-size:12.5px;color:var(--sub);background:rgba(99,102,241,.08);border:1px solid rgba(99,102,241,.2);border-radius:10px;padding:12px 14px}
+  #animrow{display:none}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand"><span class="m">M</span> Mail Identity <span class="g">AI</span> · Studio</div>
+  <a class="brand" href="index.html" style="font-size:13px;color:#8b93b8;font-weight:600">← Back to site</a>
+</header>
+
+<div class="layout">
+  <div class="panel">
+    <div class="sec">Template</div>
+    <div class="templates" id="tpls">
+      <div class="tpl on" data-t="reveal"><div class="dot" style="background:linear-gradient(135deg,#6366f1,#22d3ee)"></div>Reveal</div>
+      <div class="tpl" data-t="spotlight"><div class="dot" style="background:linear-gradient(135deg,#22d3ee,#6366f1)"></div>Spotlight</div>
+      <div class="tpl" data-t="minimal"><div class="dot" style="background:linear-gradient(135deg,#0f1330,#6366f1)"></div>Minimal</div>
+    </div>
+
+    <div id="animrow">
+      <label>Photo animation</label>
+      <select id="photoanim">
+        <option value="shine">Shine — settles as a picture (recommended)</option>
+        <option value="wipe">Slat wipe — bars open to reveal</option>
+        <option value="cascade">Cascade — bars reveal one by one</option>
+        <option value="reveal-hold">Reveal once &amp; hold</option>
+        <option value="still">Still picture — no motion</option>
+      </select>
+      <div class="hint">"Shine" and "Reveal once" leave a clean photo — best for a polished look.</div>
+    </div>
+
+    <div class="sec">Accent</div>
+    <div class="swatches" id="sw"></div>
+
+    <div class="sec">Your details</div>
+    <label>Full name</label><input id="name" type="text" value="Edward Sanchez">
+    <label>Job title</label><input id="title" type="text" value="Founder & CEO">
+    <div class="row2">
+      <div><label>Company</label><input id="company" type="text" value="Mail Identity AI"></div>
+      <div><label>Tagline</label><input id="tagline" type="text" value="Own it, don't rent it"></div>
+    </div>
+    <label>Email</label><input id="email" type="email" value="edward@mailidentityai.com">
+    <label>Website</label><input id="website" type="text" value="www.mailidentityai.com">
+    <label style="margin-top:10px"><input type="checkbox" id="verified" checked> Show verified badge</label>
+
+    <div class="sec">Photo / logo</div>
+    <div class="photobtn">
+      <button id="pickphoto">Upload photo</button>
+      <button id="clearphoto">Use initials</button>
+    </div>
+    <input type="file" id="photofile" accept="image/*" style="display:none">
+    <div class="hint">Square photos look best. No photo? We'll use your initials.</div>
+
+    <div class="sec">Social links</div>
+    <div class="row2">
+      <div><label>LinkedIn</label><input id="s_linkedin" type="text" placeholder="linkedin.com/in/..."></div>
+      <div><label>Instagram</label><input id="s_instagram" type="text" placeholder="instagram.com/..."></div>
+    </div>
+    <div class="row2">
+      <div><label>X / Twitter</label><input id="s_x" type="text" placeholder="x.com/..."></div>
+      <div><label>YouTube</label><input id="s_youtube" type="text" placeholder="youtube.com/..."></div>
+    </div>
+  </div>
+
+  <div class="stage">
+    <div class="mock">
+      <div class="mailhdr">To: client@example.com &nbsp;·&nbsp; Subject: Great connecting today</div>
+      <div class="body">Hi there,<br><br>Thanks so much for your time today — excited to work together. Talk soon.<br><br>Best,</div>
+      <div id="preview"></div>
+    </div>
+    <div class="exports">
+      <button class="btn btn-primary" id="copyBtn">Copy signature HTML</button>
+      <button class="btn btn-ghost" id="dlBtn">Download .html</button>
+    </div>
+    <div class="note">MVP note: this exports ready-to-paste HTML with the animation. In Phase 2 the same design renders to an email-safe animated <b>GIF</b> on our servers so the motion survives in Gmail &amp; Outlook — that's the "Own It" deliverable.</div>
+  </div>
+</div>
+<div class="toast" id="toast">Copied!</div>
+
+<script>
+const ACCENTS=[
+  ["#6366f1","#22d3ee"],["#7c3aed","#ec4899"],["#0ea5e9","#14b8a6"],
+  ["#f59e0b","#ef4444"],["#10b981","#84cc16"],["#111827","#6b7280"]
+];
+const state={template:"reveal",accent:0,photo:null,photoAnim:"shine"};
+const $=id=>document.getElementById(id);
+const fields=["name","title","company","tagline","email","website"];
+const socials=["linkedin","instagram","x","youtube"];
+
+const IC={
+  web:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/></svg>',
+  linkedin:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5A2.5 2.5 0 1 0 5 8.5a2.5 2.5 0 0 0 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05C20.4 8.65 21 11 21 14.1V21h-4v-6.1c0-1.45-.03-3.3-2-3.3-2 0-2.3 1.57-2.3 3.2V21H9z"/></svg>',
+  instagram:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.1" fill="currentColor" stroke="none"/></svg>',
+  x:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 2H22l-7.3 8.34L23.3 22h-6.6l-5.2-6.78L5.6 22H2.5l7.8-8.9L1.7 2h6.77l4.7 6.2zM17.75 20.1h1.7L7.35 3.8H5.5z"/></svg>',
+  youtube:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 12s0-3.2-.4-4.7a2.5 2.5 0 0 0-1.76-1.77C19.3 5.1 12 5.1 12 5.1s-7.3 0-8.84.42A2.5 2.5 0 0 0 1.4 7.3C1 8.8 1 12 1 12s0 3.2.4 4.7a2.5 2.5 0 0 0 1.76 1.77C4.7 18.9 12 18.9 12 18.9s7.3 0 8.84-.42a2.5 2.5 0 0 0 1.76-1.77C23 15.2 23 12 23 12zM9.75 15.02V8.98L15.5 12z"/></svg>'
+};
+function badge(a1,a2,id){return `<svg width="17" height="17" viewBox="0 0 24 24" fill="none" style="flex:0 0 auto"><path d="M12 1.5l2.35 1.7 2.9-.06 1.02 2.72 2.38 1.66-.9 2.76.9 2.76-2.38 1.66-1.02 2.72-2.9-.06L12 22.5l-2.35-1.7-2.9.06-1.02-2.72L3.35 16.5l.9-2.76-.9-2.76 2.38-1.66 1.02-2.72 2.9.06L12 1.5z" fill="url(#${id})"/><path d="M8.5 12.3l2.2 2.2 4.6-4.6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><defs><linearGradient id="${id}" x1="0" y1="0" x2="24" y2="24"><stop stop-color="${a1}"/><stop offset="1" stop-color="${a2}"/></linearGradient></defs></svg>`;}
+function val(id){return $(id).value.trim();}
+function initials(n){return (n.split(/\s+/).map(w=>w[0]).slice(0,2).join("")||"M").toUpperCase();}
+function activeSocials(){return socials.filter(s=>val("s_"+s)).map(s=>({k:s,href:val("s_"+s)}));}
+function railLinks(color){
+  let s=activeSocials();
+  if(!s.length) s=[{k:'linkedin',href:'#'},{k:'instagram',href:'#'},{k:'x',href:'#'}];
+  return s.map(o=>`<a href="${o.href}" style="color:${color};display:flex;text-decoration:none">${IC[o.k]||IC.web}</a>`).join("");
+}
+
+/* Polished photo panel with selectable animation style */
+function photoPanel(style, photoHTML){
+  const clip="clip-path:polygon(16% 0,100% 0,100% 100%,0 100%);-webkit-clip-path:polygon(16% 0,100% 0,100% 100%,0 100%)";
+  let overlay="",css="";
+  if(style==="wipe"||style==="cascade"){
+    overlay=`<div class="mia-shut" style="position:absolute;inset:-16% -26%;transform:skewX(-11deg);display:flex;gap:3px;pointer-events:none"><b></b><b></b><b></b><b></b></div>`;
+    const dur=style==="cascade"?"7s":"6s";
+    const del=style==="cascade"?["0s",".4s",".8s","1.2s"]:[".05s",".2s",".35s",".5s"];
+    css=`.mia-sig .mia-shut b{flex:1;background:#fff;transform:skewX(0) translateY(0);animation:miaRv ${dur} cubic-bezier(.66,0,.2,1) infinite}`+
+        del.map((d,i)=>`.mia-sig .mia-shut b:nth-child(${i+1}){animation-delay:${d}}`).join("")+
+        `@keyframes miaRv{0%{transform:translateY(0)}15%{transform:translateY(-125%)}90%{transform:translateY(-125%)}100%{transform:translateY(0)}}`;
+  }else if(style==="reveal-hold"){
+    overlay=`<div class="mia-shut" style="position:absolute;inset:-16% -26%;transform:skewX(-11deg);display:flex;gap:3px;pointer-events:none"><b></b><b></b><b></b><b></b></div>`;
+    css=`.mia-sig .mia-shut b{flex:1;background:#fff;animation:miaOnce 1.5s cubic-bezier(.66,0,.2,1) forwards}`+
+        [".1s",".28s",".46s",".64s"].map((d,i)=>`.mia-sig .mia-shut b:nth-child(${i+1}){animation-delay:${d}}`).join("")+
+        `@keyframes miaOnce{to{transform:translateY(-125%)}}`;
+  }else if(style==="shine"){
+    overlay=`<div class="mia-shine" style="position:absolute;top:-30%;bottom:-30%;left:-30%;width:34px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.5),transparent);transform:skewX(-11deg);pointer-events:none"></div>`;
+    css=`.mia-sig .mia-shine{animation:miaSh 5s ease-in-out infinite}@keyframes miaSh{0%{left:-30%}55%{left:125%}100%{left:125%}}`;
+  }
+  return {panel:`<div style="position:relative;width:150px;overflow:hidden;${clip};background:#0d1220">${photoHTML}${overlay}</div>`, css:css};
+}
+
+function render(){
+  const [a1,a2]=ACCENTS[state.accent];
+  $("animrow").style.display = state.template==="reveal" ? "block":"none";
+  const d={name:val("name"),title:val("title"),company:val("company"),tagline:val("tagline"),email:val("email"),website:val("website")};
+  const verified=$("verified").checked;
+  const photoHTML=state.photo
+    ? `<img src="${state.photo}" alt="${d.name}" style="width:100%;height:100%;object-fit:cover;object-position:60% 28%;position:absolute;inset:0">`
+    : `<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,${a1},${a2});color:#fff;font-weight:800;font-size:30px">${initials(d.name)}</div>`;
+  const uid=Math.random().toString(36).slice(2,7);
+  let html="",css="";
+
+  if(state.template==="reveal"){
+    const pp=photoPanel(state.photoAnim,photoHTML);
+    css=pp.css;
+    html=`<div class="mia-sig" style="display:inline-flex;align-items:stretch;background:#fff;border-radius:14px;box-shadow:0 8px 26px rgba(20,26,50,.10);overflow:hidden;font-family:Arial,Helvetica,sans-serif">
+      <div style="width:50px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:15px;margin:12px 0 12px 10px;background:#f3f5f9;border-radius:11px">${railLinks("#20242e")}</div>
+      <div style="padding:16px 14px 16px 16px;display:flex;flex-direction:column;justify-content:center">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:9px"><span style="width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,${a1},${a2});display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:15px">${initials(d.company)}</span><span style="line-height:1.1"><b style="font-size:12px;letter-spacing:.1em;color:#141824">${d.company.toUpperCase()}</b><span style="display:block;font-size:8px;letter-spacing:.28em;color:#6b7180">${d.tagline.toUpperCase()}</span></span></div>
+        <div style="display:flex;align-items:center;gap:6px"><span style="font-size:19px;font-weight:800;color:#141824;letter-spacing:-.3px">${d.name}</span>${verified?badge(a1,a2,'b'+uid):''}</div>
+        <div style="font-size:12px;color:#6b7180;font-weight:600;margin-top:2px">${d.title}</div>
+        <div style="height:1px;background:linear-gradient(90deg,${a1}88,transparent);margin:9px 0 7px;width:80%"></div>
+        <div style="font-size:12px;color:#6b7180"><a href="mailto:${d.email}" style="color:#6b7180;text-decoration:none">${d.email}</a></div>
+        <div style="font-size:12px;color:#6b7180"><a href="#" style="color:#6b7180;text-decoration:none">${d.website}</a></div>
+      </div>
+      ${pp.panel}
+    </div>`;
+  }
+  else if(state.template==="spotlight"){
+    css=`.mia-sig .ring{animation:sp 4s linear infinite}@keyframes sp{to{transform:rotate(360deg)}}.mia-sig .bar{animation:gw 2.6s ease-in-out infinite}@keyframes gw{0%,100%{width:44px}50%{width:74px}}`;
+    html=`<div class="mia-sig" style="display:inline-flex;align-items:center;gap:18px;background:#fff;border-radius:14px;box-shadow:0 8px 26px rgba(20,26,50,.10);padding:18px 24px 18px 18px;font-family:Arial,Helvetica,sans-serif">
+      <div style="position:relative;width:84px;height:84px;flex:0 0 auto">
+        <div class="ring" style="position:absolute;inset:-4px;border-radius:50%;background:conic-gradient(from 0deg,${a1},${a2},${a1})"></div>
+        <div style="position:absolute;inset:0;border-radius:50%;overflow:hidden;border:3px solid #fff">${photoHTML}</div>
+      </div>
+      <div>
+        <div style="display:flex;align-items:center;gap:6px"><span style="font-size:21px;font-weight:800;color:#141824;letter-spacing:-.3px">${d.name}</span>${verified?badge(a1,a2,'b'+uid):''}</div>
+        <div style="font-size:12.5px;color:#6b7180;font-weight:600;margin-top:2px">${d.title} · <span style="background:linear-gradient(90deg,${a1},${a2});-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:800">${d.company}</span></div>
+        <div class="bar" style="height:3px;width:44px;border-radius:2px;background:linear-gradient(90deg,${a1},${a2});margin:9px 0"></div>
+        <div style="font-size:12px;color:#6b7180"><a href="mailto:${d.email}" style="color:#6b7180;text-decoration:none">${d.email}</a> &nbsp;·&nbsp; <a href="#" style="color:#6b7180;text-decoration:none">${d.website}</a></div>
+        <div style="display:flex;gap:10px;margin-top:9px">${railLinks(a1)}</div>
+      </div>
+    </div>`;
+  }
+  else{
+    css=`.mia-sig .sweep{animation:swp 3s ease-in-out infinite}@keyframes swp{0%{background-position:0 0}100%{background-position:200% 0}}`;
+    html=`<div class="mia-sig" style="display:inline-block;background:#fff;border-radius:12px;box-shadow:0 8px 26px rgba(20,26,50,.10);padding:20px 24px;font-family:Arial,Helvetica,sans-serif;min-width:340px">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px"><span style="width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,${a1},${a2});display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:16px">${initials(d.company)}</span><b style="font-size:13px;letter-spacing:.1em;color:#141824">${d.company.toUpperCase()}</b></div>
+      <div class="sweep" style="height:3px;border-radius:2px;background:linear-gradient(90deg,${a1},${a2},${a1});background-size:200% 100%;margin-bottom:12px"></div>
+      <div style="display:flex;align-items:center;gap:6px"><span style="font-size:20px;font-weight:800;color:#141824;letter-spacing:-.3px">${d.name}</span>${verified?badge(a1,a2,'b'+uid):''}</div>
+      <div style="font-size:12.5px;color:#6b7180;font-weight:600;margin:2px 0 10px">${d.title}</div>
+      <div style="font-size:12px;color:#6b7180;line-height:1.7"><a href="mailto:${d.email}" style="color:#6b7180;text-decoration:none">${d.email}</a><br><a href="#" style="color:#6b7180;text-decoration:none">${d.website}</a></div>
+      <div style="display:flex;gap:10px;margin-top:11px">${railLinks(a1)}</div>
+    </div>`;
+  }
+  $("preview").innerHTML=`<style>${css}</style>`+html;
+  window._export=`<style>${css}</style>`+html;
+}
+
+function buildSwatches(){
+  const w=$("sw");
+  ACCENTS.forEach((a,i)=>{
+    const d=document.createElement("div");
+    d.className="sw"+(i===0?" on":"");
+    d.style.background=`linear-gradient(135deg,${a[0]},${a[1]})`;
+    d.onclick=()=>{state.accent=i;[...w.children].forEach(c=>c.classList.remove("on"));d.classList.add("on");render();};
+    w.appendChild(d);
+  });
+}
+function toast(m){const t=$("toast");t.textContent=m;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),1600);}
+
+document.querySelectorAll(".tpl").forEach(el=>el.onclick=()=>{
+  document.querySelectorAll(".tpl").forEach(x=>x.classList.remove("on"));
+  el.classList.add("on");state.template=el.dataset.t;render();
+});
+$("photoanim").addEventListener("change",e=>{state.photoAnim=e.target.value;render();});
+fields.concat(socials.map(s=>"s_"+s)).forEach(id=>$(id).addEventListener("input",render));
+$("verified").addEventListener("change",render);
+$("pickphoto").onclick=()=>$("photofile").click();
+$("clearphoto").onclick=()=>{state.photo=null;render();};
+$("photofile").onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>{state.photo=ev.target.result;render();};r.readAsDataURL(f);};
+$("copyBtn").onclick=async()=>{try{await navigator.clipboard.writeText(window._export);toast("Signature HTML copied!");}catch(e){toast("Press Ctrl/Cmd+C to copy");}};
+$("dlBtn").onclick=()=>{const blob=new Blob([`<!doctype html><meta charset=utf-8>`+window._export],{type:"text/html"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="my-signature.html";a.click();toast("Downloaded!");};
+
+buildSwatches();render();
+</script>
+</body>
+</html>
